@@ -5,6 +5,7 @@ package application;
 
 import javafx.application.Platform;
 import javafx.scene.control.*;
+import prak5gemklassen.Benutzer;
 import benutzerVerwaltung.*;
 /*
  * Klasse die für die Logik unserer Anmeldung Scene verantwortlich ist.

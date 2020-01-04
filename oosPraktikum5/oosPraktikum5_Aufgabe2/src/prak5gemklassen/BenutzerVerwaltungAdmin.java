@@ -1,7 +1,7 @@
 /**
  * Paket zum dritten Praktikum in OOS.
  */
-package benutzerVerwaltung;
+package prak5gemklassen;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

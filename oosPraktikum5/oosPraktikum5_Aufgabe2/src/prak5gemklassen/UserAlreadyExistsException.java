@@ -1,7 +1,7 @@
 /**
  * Paket zum dritten Praktikum in OOS.
  */
-package benutzerVerwaltung;
+package prak5gemklassen;
 
 /**
  * Exception die ausgelöst wird, wenn man versucht einen bereits bestehenden

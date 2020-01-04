@@ -1,7 +1,7 @@
 /**
  * Paket zum zweiten Praktikum in OOS.
  */
-package benutzerVerwaltung;
+package prak5gemklassen;
 
 import java.io.Serializable;
 

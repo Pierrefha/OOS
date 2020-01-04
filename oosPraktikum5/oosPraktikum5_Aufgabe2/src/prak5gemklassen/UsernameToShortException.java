@@ -1,7 +1,7 @@
 /**
  * Paket zum dritten Praktikum in OOS.
  */
-package benutzerVerwaltung;
+package prak5gemklassen;
 
 /**
  * Exception die Ausgelöst wird, wenn man versucht einen zu kurzen Benutzernamen zu verwenden.
