@@ -1,7 +1,12 @@
 /**
  * Paket zum dritten Praktikum in OOS.
  */
-package prak5gemklassen;
+package prak5server;
+
+import prak5gemklassen.Benutzer;
+import prak5gemklassen.UnsafePasswordException;
+import prak5gemklassen.UserAlreadyExistsException;
+import prak5gemklassen.UsernameToShortException;
 
 /**
  * Interface das Schnittstelle zur Benutzerverwaltung zur Verfügung stellt.

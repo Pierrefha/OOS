@@ -1,12 +1,11 @@
 /*
  * javafx application Paket, in dem sich um die Darstellung gekümmert wird
  */
-package application;
+package prak5client;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import prak5gemklassen.Benutzer;
-import benutzerVerwaltung.*;
 /*
  * Klasse die für die Logik unserer Login Scene verantwortlich ist.
  * @author xddq
@@ -15,6 +14,7 @@ public class LoginController {
 	
 	//private var that will be toggled
 	private boolean neuAnmeldung =false;
+	private boolean remoteFlag=false;
 	
 	//attribute of type MainApplication used for callback
 	public MainApplication application;
@@ -39,11 +39,20 @@ public class LoginController {
 	}
 	
 	/*
+	 * method to toggle remoteFlag value on click of our checkbox
+	 */
+	public void remoteCheckboxClicked(){
+		remoteFlag= (!remoteFlag);
+		System.out.println(remoteFlag);
+	}
+	
+	/*
 	 * method to toggle neuAnmeldung value on click of our checkbox
 	 */
 	public void checkboxClicked(ActionEvent event){
 		neuAnmeldung= (!neuAnmeldung);
 		System.out.println(neuAnmeldung);
+		application.setRemoteFlag(this.remoteFlag);
 		//hier muss neuAnmeldung aufgerufen werden
 		neuAnmeldung(event);
 	}
@@ -52,8 +61,10 @@ public class LoginController {
 	 * diese Methode ruft die MainApplication auf und übergibt den aufzurufenden controller
 	 */
 	public void neuAnmeldung(ActionEvent event) {
+		application.setRemoteFlag(this.remoteFlag);
 		application.neuAnmeldung();
 	}
+	
 	
 	/*
 	 * method to create a user with our given input 

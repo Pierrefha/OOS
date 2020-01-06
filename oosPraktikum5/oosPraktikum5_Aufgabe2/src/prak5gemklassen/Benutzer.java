@@ -16,12 +16,12 @@ public class Benutzer implements Serializable{
 	/*
 	 * User Identifikationsnummer eines Benutzers
 	 */
-	String userId;
+	public String userId;
 	
 	/*
 	 * Passwort eines Benutzers.
 	 */
-	char[] passWort;
+	public char[] passWort;
 	
 	//Konstruktoren
 	

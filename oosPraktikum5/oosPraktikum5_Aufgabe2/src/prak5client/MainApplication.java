@@ -1,12 +1,11 @@
 /*
  * javafx application Paket, in dem sich um die Darstellung gekümmert wird
  */
-package application;
+package prak5client;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import prak5gemklassen.Benutzer;
-import prak5gemklassen.BenutzerVerwaltungAdmin;
 import prak5gemklassen.UnsafePasswordException;
 import prak5gemklassen.UserAlreadyExistsException;
 import prak5gemklassen.UsernameToShortException;
@@ -17,8 +16,6 @@ import javafx.fxml.FXMLLoader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import benutzerVerwaltung.*;
 
 /*
  * Klasse die das Zusammenspiel der Objekte steuert
@@ -31,10 +28,19 @@ public class MainApplication extends Application {
 	 * Attribute, welche in start initialisiert werden, um auch von Außerhalb
 	 *  der start methode darauf zugreifen zu können
 	 */
+	//remote flag
+	private boolean remote;
 	private Stage stage;
 	private BenutzerVerwaltungAdmin bva;
+	private Client client;
 	private String anmeldungErrorCaption, loginErrorCaption;
 	
+	/*
+	 * Methode um remoteFlag zu setzen
+	 */
+	public void setRemoteFlag(boolean flag) {
+		this.remote=flag;
+	}
 	/*
 	 * Methode die durch launch aufgerufen wird. 
 	 * Hier wird sich um die korrekte Instanziierung und Verwaltung der Fenster gekümmert.
@@ -46,6 +52,9 @@ public class MainApplication extends Application {
 			//erstelle bva objekt
 			BenutzerVerwaltungAdmin bvaObj = new BenutzerVerwaltungAdmin();
 			this.bva = bvaObj;
+			//erstelle client objekt
+			Client clientObj = new Client();
+			this.client = clientObj;
 			//abfrage, ob Datenhaltung initialisiert werden soll
 			System.out.println("Wollen sie die Datenhaltung initialisieren?");
 			System.out.println("0 für Ja, beliebiger anderer Wert für Nein.");
@@ -167,8 +176,10 @@ public class MainApplication extends Application {
 	 * param benutzer: Benutzer der in die Benutzerverwaltung eingetragen werden soll
 	 */
 	public void neuerBenutzer(Benutzer benutzer) {
+		//remote check
+		if(remote) {
 			try {
-				bva.benutzerEintragen(benutzer);
+				this.client.benutzerEintragen(benutzer);
 				//wenn Erfolgreich, dann gehe zu Login Scene
 				loginScene();
 			} catch (UserAlreadyExistsException e) {
@@ -182,21 +193,56 @@ public class MainApplication extends Application {
 				anmeldungScene();
 			}
 		}
+		
+			else {
+
+			try {
+				this.bva.benutzerEintragen(benutzer);
+				//wenn Erfolgreich, dann gehe zu Login Scene
+				loginScene();
+			} catch (UserAlreadyExistsException e) {
+				this.anmeldungErrorCaption = "Benutzer existiert bereits!";
+				anmeldungScene();
+			} catch (UnsafePasswordException e) {
+				this.anmeldungErrorCaption = "Unsafe Password! Mindestens 8 Zeichen lang!";
+				anmeldungScene();
+			} catch (UsernameToShortException e) {
+				this.anmeldungErrorCaption = "Benutzername zu kurz! Mindestens 5 Zeichen lang!";
+				anmeldungScene();
+			}
+			}
+		}
 	
 	/*
 	 * Methode die versucht den Benutzer in das System einzuloggen.
 	 * param benutzer: Benutzer der eingeloggt werden soll.
 	 */
 	void benutzerLogin(Benutzer benutzer) {
-		//durch benutzerOK überprüfen, ob man Benutzer registrieren darf
-		//vllt logik drehen!
-		if(!bva.benutzerOK(benutzer)) {
-			anwendungScene();
+		
+		//remote check
+		if(this.remote) {
+			//durch benutzerOK überprüfen, ob man Benutzer registrieren darf
+			//vllt logik drehen!
+			if(!client.benutzerOK(benutzer)) {
+				anwendungScene();
+			}
+			else {
+				this.loginErrorCaption="Benutzer existiert nicht!";
+				loginScene();
+			}
 		}
 		else {
-			this.loginErrorCaption="Benutzer existiert nicht!";
-			loginScene();
+			//durch benutzerOK überprüfen, ob man Benutzer registrieren darf
+			//vllt logik drehen!
+			if(!bva.benutzerOK(benutzer)) {
+				anwendungScene();
+			}
+			else {
+				this.loginErrorCaption="Benutzer existiert nicht!";
+				loginScene();
+			}
 		}
+
 	}
 
 	

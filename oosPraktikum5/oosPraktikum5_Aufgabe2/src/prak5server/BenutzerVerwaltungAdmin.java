@@ -1,8 +1,9 @@
 /**
  * Paket zum dritten Praktikum in OOS.
  */
-package prak5gemklassen;
+package prak5server;
 
+import prak5gemklassen.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
