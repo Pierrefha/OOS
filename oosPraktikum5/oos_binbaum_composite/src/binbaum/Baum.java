@@ -4,7 +4,7 @@ package binbaum;
  * declare generics to make sure we can only use objects of same type
  */
 public abstract class Baum<Data> {
-	Object entry;
+	Data entry;
 	
 	/*
 	 * every tree has node

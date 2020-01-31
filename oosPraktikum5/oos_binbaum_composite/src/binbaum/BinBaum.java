@@ -20,6 +20,13 @@ public class BinBaum<Data> extends Baum<Data> {
 	}
 
 	/*
+	 * Baum ist entweder Blatt oder Binärbaum
+	 * und Binärbaum hat immer zwei Blätter, nie einzelne Blätter.
+	 * 
+	 * daher kann man nur Bäume von unten nach oben aufbauen,
+	 * indem man den Konstruktor aufruft.
+	 */
+	/*
 	 * if left child empty, add it. otherwise work your way recursive to the last child
 	 */
 	public BinBaum<Data> addLeft(Baum<Data> baum) {
@@ -29,8 +36,15 @@ public class BinBaum<Data> extends Baum<Data> {
 		}
 		
 		else {
-			return((BinBaum<Data>)(Baum<Data>)this.getLeftChild()).addLeft(baum);
-		}
+			if(this.left instanceof Leaf<?>) {
+			Data tmp = this.left.entry;
+			this.left = new BinBaum<Data>(tmp,baum,new Leaf(0));
+			return this;
+			}
+			else {
+				return((BinBaum<Data>)(Baum<Data>)this.getLeftChild()).addLeft(baum);
+			}
+			}
 	}
 	/*
 	 * if right child empty, add it. otherwise work your way recursive to the last child
@@ -41,7 +55,14 @@ public class BinBaum<Data> extends Baum<Data> {
 			return this;
 		}
 		else {
-			return ((BinBaum<Data>) this.getRightChild()).addRight(baum);
+			if(this.right instanceof Leaf<?>) {
+			Data tmp = this.right.entry;
+			this.right = new BinBaum<Data>(tmp,baum,null);
+			return this;
+			}
+			else {
+				return((BinBaum<Data>)(Baum<Data>)this.getRightChild()).addRight(baum);
+			}
 		}
 	}
 	
