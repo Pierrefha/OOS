@@ -29,7 +29,8 @@ public class DatabaseExecuterProxy implements DatabaseExecuterSubject {
 		}
 		else {
 			if(query.equals("DROP")){
-				throw new Exception("YOU WONT DROP MY DATABASE BRO.");
+				System.out.println("you wont drop my db");
+				//throw new Exception("YOU WONT DROP MY DATABASE BRO.");
 			}
 			else {
 				dbRS.executeDatabase(query);
